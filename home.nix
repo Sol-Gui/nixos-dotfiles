@@ -4,6 +4,7 @@
 
   imports = [ 
     inputs.spicetify-nix.homeManagerModules.default
+    ./modules/browser.nix
   ];
 
   home.username = "gui";
