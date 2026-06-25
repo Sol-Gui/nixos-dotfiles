@@ -131,8 +131,9 @@
   };
 
   environment.systemPackages = with pkgs; [
+    codex
+    ani-cli
     vim
-    wget
     alacritty
     git
     fastfetch
