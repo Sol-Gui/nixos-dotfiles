@@ -4,7 +4,9 @@
 
   imports = [ 
     inputs.spicetify-nix.homeManagerModules.default
-    ./modules/browser.nix
+    ./modules/apps/browser.nix
+    ./modules/home/fastfetch.nix
+    ./modules/home/kitty.nix
   ];
 
   home.username = "gui";
@@ -21,16 +23,38 @@
   };
   
   home.packages = with pkgs; [
+    kitty
+    fastfetch
     vesktop
   ];
 
   programs.spicetify = {
     enable = true;
-    theme = inputs.spicetify-nix.legacyPackages.${pkgs.system}.themes.catppuccin;
-    colorScheme = "mocha";
-    enabledExtensions = with inputs.spicetify-nix.legacyPackages.${pkgs.system}.extensions; [
-      fullAppDisplay
-      shuffle
-    ];
+
+    wayland = true;
+    windowManagerPatch = false;
+
+    theme = inputs.spicetify-nix.legacyPackages.${pkgs.system}.themes.retroBlur;
+    colorScheme = "purple";
+
+    enabledExtensions =
+      with inputs.spicetify-nix.legacyPackages.${pkgs.system}.extensions;
+      [
+        coverAmbience
+        catJamSynced
+        fullAppDisplayMod
+        spicyLyrics
+        playlistIcons
+        focusMode
+        sideHide
+        showQueueDuration
+        volumePercentage
+        sleepTimer
+        history
+        sessionStats
+      ];
+
+    experimentalFeatures = null;
+    alwaysEnableDevTools = false;
   };
 }

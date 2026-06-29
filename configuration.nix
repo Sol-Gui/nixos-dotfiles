@@ -61,8 +61,6 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
 
-  services.displayManager.sddm.enable = true;
-
   services.flatpak.enable = true;
 
   systemd.services.flatpak-repo = {
@@ -131,10 +129,14 @@
   };
 
   environment.systemPackages = with pkgs; [
+    (sddm-astronaut.override {
+      embeddedTheme = "black_hole";
+    })
+
+    nautilus
     codex
     ani-cli
     vim
-    alacritty
     git
     fastfetch
     vesktop
@@ -146,6 +148,21 @@
     wireguard-tools
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default  
   ];
+
+  services.displayManager.sddm = {
+    enable = true;
+    package = pkgs.kdePackages.sddm;
+    wayland.enable = true;
+    theme = "sddm-astronaut-theme";
+
+    extraPackages = [
+      pkgs.kdePackages.qtmultimedia
+    ];
+  };
+
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
 
   programs.git = {
     enable = true;
