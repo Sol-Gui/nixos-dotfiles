@@ -30,6 +30,13 @@
     enable32Bit = true;    
   };
 
+  swapDevices = [
+  {
+    device = "/swapfile";
+    size = 10 * 1024; # 10 GB
+  }
+  ];
+
   hardware.enableRedistributableFirmware = true;
   hardware.bluetooth = {
     enable = true;
@@ -93,8 +100,6 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    
-    config.common.default = "*";
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -128,11 +133,37 @@
     ];
   };
 
+  programs.nix-ld = {
+    enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
+    (jdk21.override {
+      enableJavaFX = true;
+    })
+
     (sddm-astronaut.override {
       embeddedTheme = "black_hole";
     })
 
+    xorg.libXxf86vm
+    xorg.libX11
+    xorg.libXext
+    xorg.libXi
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libXrender
+    xorg.libxcb
+
+    libGL
+    openal
+
+
+    mpv
+    mpvpaper
+    waypaper
+    cava
+    geteduroam
     nautilus
     codex
     ani-cli

@@ -15,7 +15,7 @@
 
     settings = {
       # Janela
-      background_opacity = 0.4;
+      background_opacity = 0.85;
       dynamic_background_opacity = true;
       window_padding_width = 8;
       hide_window_decorations = true;

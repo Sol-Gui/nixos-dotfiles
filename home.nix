@@ -19,7 +19,17 @@
       btw = "echo I use nixos, btw";
       roblox = "flatpak run org.vinegarhq.Sober";
       steam = "DISPLAY=:1 steam";
+      eduroam = "geteduroam-gui";
+      sklauncher = "steam-run java -jar ~/SKlauncher.jar";
     };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
   };
   
   home.packages = with pkgs; [
@@ -27,6 +37,32 @@
     fastfetch
     vesktop
   ];
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+    cava.enable = true;
+    cava.flavor = "frappe";
+  };
+
+  gtk = {
+    enable = true;
+
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
 
   programs.spicetify = {
     enable = true;
@@ -36,23 +72,6 @@
 
     theme = inputs.spicetify-nix.legacyPackages.${pkgs.system}.themes.retroBlur;
     colorScheme = "purple";
-
-    enabledExtensions =
-      with inputs.spicetify-nix.legacyPackages.${pkgs.system}.extensions;
-      [
-        coverAmbience
-        catJamSynced
-        fullAppDisplayMod
-        spicyLyrics
-        playlistIcons
-        focusMode
-        sideHide
-        showQueueDuration
-        volumePercentage
-        sleepTimer
-        history
-        sessionStats
-      ];
 
     experimentalFeatures = null;
     alwaysEnableDevTools = false;

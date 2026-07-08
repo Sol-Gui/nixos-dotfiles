@@ -38,6 +38,8 @@
                 "gfx.webrender.all" = true;
             };
 
+            extensions.force = true;
+
     
             #extensions = with pkgs.nur.repos.rycee.firefox-addons; [
             #    ublock-origin

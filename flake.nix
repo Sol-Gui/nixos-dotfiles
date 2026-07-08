@@ -16,9 +16,14 @@
 			url = "github:Gerg-L/spicetify-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		catppuccin = {
+			url = "github:catppuccin/nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = inputs@{ self, nixpkgs, home-manager, noctalia, spicetify-nix, ... }: {
+	outputs = inputs@{ self, nixpkgs, home-manager, noctalia, spicetify-nix, catppuccin, ... }: {
 		nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
 			specialArgs = { inherit inputs; };
 			system = "x86_64-linux";
@@ -30,7 +35,12 @@
 						useGlobalPkgs = true;
 						useUserPackages = true;
 						extraSpecialArgs = { inherit inputs; };
-						users.gui = import ./home.nix;
+						users.gui = {
+							imports = [
+								./home.nix
+								catppuccin.homeModules.catppuccin
+							];
+						};
 						backupFileExtension = "backup";
 					};
 				}
