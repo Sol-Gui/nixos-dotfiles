@@ -18,7 +18,6 @@
     shellAliases = {
       btw = "echo I use nixos, btw";
       roblox = "flatpak run org.vinegarhq.Sober";
-      steam = "DISPLAY=:1 steam";
       eduroam = "geteduroam-gui";
       sklauncher = "steam-run java -jar ~/SKlauncher.jar";
     };

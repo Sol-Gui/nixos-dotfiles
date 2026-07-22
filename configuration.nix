@@ -8,10 +8,27 @@
 
   # boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
+
+  boot.loader.grub = {
+    enable = true;
+    devices = [ "nodev" ];
+    efiSupport = true;
+    useOSProber = true;
+
+    minegrub-world-sel = {
+      enable = true;
+
+      customIcons = with config.system; [
+        {
+          inherit name;
+          lineTop = with nixos; distroName + " " + codeName + " (" + version + ")";
+          lineBottom = "Survival Mode, No Cheats, Version: " + nixos.release;
+          imgName = "nixos";
+        }
+      ];
+    };
+  };
+
   boot.supportedFilesystems = [ "ntfs" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
@@ -83,7 +100,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
   };
 
   security.rtkit.enable = true;
@@ -100,6 +116,8 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
+
+    config.common.default = "*";
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -146,18 +164,27 @@
       embeddedTheme = "black_hole";
     })
 
-    xorg.libXxf86vm
-    xorg.libX11
-    xorg.libXext
-    xorg.libXi
-    xorg.libXrandr
-    xorg.libXcursor
-    xorg.libXrender
-    xorg.libxcb
+    kdePackages.okular
+    ollama
+    obsidian
+
+    libXxf86vm
+    libX11
+    libXext
+    libXi
+    libXrandr
+    libXcursor
+    libXrender
+    libxcb
 
     libGL
     openal
 
+    vim
+    neovim
+    insomnia
+    vscode
+    codex
 
     mpv
     mpvpaper
@@ -165,15 +192,13 @@
     cava
     geteduroam
     nautilus
-    codex
     ani-cli
-    vim
     git
     fastfetch
     vesktop
-    vscode
     proton-vpn
     steam-run
+    
     xwayland
     xwayland-satellite
     wireguard-tools
@@ -193,7 +218,6 @@
 
   services.gvfs.enable = true;
   services.udisks2.enable = true;
-
 
   programs.git = {
     enable = true;

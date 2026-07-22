@@ -6,6 +6,11 @@
 			url = "github:nix-community/home-manager/release-26.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		minegrub-world-sel-theme = {
+			url = "github:Lxtharia/minegrub-world-sel-theme";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 		
 		noctalia = {
 			url = "github:noctalia-dev/noctalia";
@@ -28,6 +33,7 @@
 			specialArgs = { inherit inputs; };
 			system = "x86_64-linux";
 			modules = [
+				inputs.minegrub-world-sel-theme.nixosModules.default
 				./noctalia.nix
 				./configuration.nix
 				home-manager.nixosModules.home-manager {
